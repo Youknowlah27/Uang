@@ -1,0 +1,303 @@
+# Rules knowledge base. Every rule says WHERE it came from, WHEN it was verified and HOW it is enforced.
+# confidence: official  = read from the platform's own page (see snapshots/)
+#             secondary = reported by third parties, not yet confirmed on an official page
+#             internal  = our own design/strategy rule derived from official rules
+# severity:   block = cannot reach the approval queue | warn = reviewer flags, human decides | info = guidance
+# lane:       brand (original content, aims at platform monetisation) | clipping (campaign payouts) | affiliate | all
+meta:
+  version: 1
+  verified_at: 2026-10-10
+  note: >
+    TikTok/Instagram/Whop pages are JS-rendered; they are fetched with headless Chromium
+    (shorts_agency/tools/render_fetch.py). The RulesWatcher re-snapshots them weekly and diffs.
+
+rules:
+  # ------------------------------------------------------------------ YouTube
+  - id: yt.inauthentic.template
+    platform: [youtube]
+    lane: [brand]
+    severity: block
+    statement: "Mass-produced / templated content is not monetisable. AI content built on generic templates giving the impression of mass production is called out explicitly."
+    check: originality.template_similarity
+    source: {url: "https://support.google.com/youtube/answer/1311392", snapshot: snapshots/youtube_inauthentic.txt, quote: "AI-generated content made with generic or unoriginal templates giving the impression of mass production"}
+    confidence: official
+    notes: "Renamed from 'repetitious' to 'inauthentic' on July 15, 2025. Recurring intros/outros and series with a distinct concept per video are allowed, so we vary topic, angle, hook and scene mix per video."
+  - id: yt.inauthentic.text_slideshow
+    platform: [youtube]
+    lane: [brand]
+    severity: block
+    statement: "Image slideshows or scrolling text with minimal narrative, commentary or educational value are not allowed."
+    check: originality.analysis_present
+    source: {url: "https://support.google.com/youtube/answer/1311392", snapshot: snapshots/youtube_inauthentic.txt}
+    confidence: official
+  - id: yt.reused.permission_irrelevant
+    platform: [youtube]
+    lane: [brand, clipping]
+    severity: block
+    statement: "Reused content needs significant original commentary or substantive modification; the policy applies even with the original creator's permission. Violations can remove monetisation from the whole channel."
+    check: lane.separation
+    source: {url: "https://support.google.com/youtube/answer/1311392", snapshot: snapshots/youtube_inauthentic.txt, quote: "applies even if you have permission from the original creator"}
+    confidence: official
+    notes: "Campaign clips therefore live on a separate clipping account/channel, never on the channel we want in YPP."
+  - id: yt.monetisation.earnings_hold
+    platform: [youtube]
+    lane: [all]
+    severity: info
+    statement: "While investigating, YouTube may withhold or adjust earnings (payment delays of up to 90 days)."
+    check: manual
+    source: {url: "https://support.google.com/youtube/answer/1311392", snapshot: snapshots/youtube_inauthentic.txt}
+    confidence: official
+  - id: yt.ai.disclosure
+    platform: [youtube]
+    lane: [all]
+    severity: block
+    statement: "Disclose realistic altered/synthetic content (real person made to say/do something, altered real footage, realistic scene that did not occur). Not needed for non-realistic animation, scripts, captions, voice-over."
+    check: disclosure.ai_realistic
+    source: {url: "https://support.google.com/youtube/answer/14328491", snapshot: snapshots/youtube_altered_content.txt}
+    confidence: official
+    notes: "Our mascot/motion-graphics content is non-realistic, so no label is needed; the check blocks any scene flagged photoreal unless the post carries the AI label."
+  - id: yt.ypp.thresholds
+    platform: [youtube]
+    lane: [brand]
+    severity: info
+    statement: "YPP full monetisation: 1,000 subscribers AND (4,000 qualified public watch hours in 12 months OR 10 million qualified Shorts views in 90 days). Shorts watch hours do not count toward the 4,000."
+    check: manual
+    source: {url: "https://support.google.com/youtube/answer/72851", snapshot: snapshots/youtube_ypp_overview.txt}
+    confidence: official
+    notes: "Third-party reports (Aug 2026) say thresholds may rise for new applicants from Feb 2027; not on the official page at fetch time. RulesWatcher flags if the numbers change."
+  - id: yt.shorts.meta
+    platform: [youtube]
+    lane: [all]
+    severity: warn
+    statement: "Shorts title <= 100 chars (about 60 visible in search); description <= 5,000 chars."
+    check: metadata.limits
+    source: {url: "https://flowshorts.app/tools/social-media-character-counter", quote: "100-character title limit"}
+    confidence: secondary
+
+  # ------------------------------------------------------------------ TikTok
+  - id: tt.crp.eligibility
+    platform: [tiktok]
+    lane: [brand]
+    severity: info
+    statement: "Creator Rewards: personal account, 18+, 10,000 followers, 100,000 views in last 30 days, original videos >= 1 minute, based in an eligible country."
+    check: manual
+    source: {url: "https://www.tiktok.com/support/faq_detail?id=7581821550694013452", snapshot: snapshots/tiktok_creator_rewards.txt}
+    confidence: official
+    notes: "Indonesia eligibility is NOT confirmed by an official page (country list only seen in user-generated TikTok text). Check TikTok Studio > Creator Rewards in the app."
+  - id: tt.crp.min_duration
+    platform: [tiktok]
+    lane: [brand]
+    severity: block
+    statement: "A video only earns Creator Rewards if it is at least one minute long."
+    check: crp.duration_min
+    applies_when: {goal: creator_rewards}
+    source: {url: "https://www.tiktok.com/support/faq_detail?id=7581821550694013452", snapshot: snapshots/tiktok_creator_rewards.txt, quote: "Be at least one minute long."}
+    confidence: official
+    notes: "Our 20-45s reach videos are NOT CRP-eligible. The Strategist must schedule separate 61-90s 'rewards' videos once the account nears the follower/view bar."
+  - id: tt.crp.original_only
+    platform: [tiktok]
+    lane: [brand]
+    severity: block
+    statement: "CRP originality: not original = Duet/Stitch, others' watermarks, reproduced with slight modifications (speed-ups, filters, fixed text, stickers), media from other sources without new ideas, looping videos, photos, or ONLY text overlays."
+    check: crp.no_text_only
+    applies_when: {goal: creator_rewards}
+    source: {url: "https://www.tiktok.com/support/faq_detail?id=7581821550694013452", snapshot: snapshots/tiktok_creator_rewards.txt, quote: "only text overlays"}
+    confidence: official
+  - id: tt.crp.no_sponsored
+    platform: [tiktok]
+    lane: [brand]
+    severity: block
+    statement: "Videos with advertisements, paid promotions or sponsored content are not eligible for Creator Rewards."
+    check: crp.not_sponsored
+    applies_when: {goal: creator_rewards}
+    source: {url: "https://www.tiktok.com/support/faq_detail?id=7581821550694013452", snapshot: snapshots/tiktok_creator_rewards.txt}
+    confidence: official
+    notes: "Affiliate / campaign videos go to a non-CRP lane."
+  - id: tt.crp.music_over_1min
+    platform: [tiktok]
+    lane: [brand]
+    severity: warn
+    statement: "Copyrighted music playing for over one minute puts a CRP video at risk of being muted."
+    check: audio.music_original
+    source: {url: "https://www.tiktok.com/support/faq_detail?id=7581821550694013452", snapshot: snapshots/tiktok_creator_rewards.txt}
+    confidence: official
+    notes: "House music is synthesised in-repo, so this passes by construction; external tracks are flagged."
+  - id: tt.fyf.unoriginal
+    platform: [tiktok]
+    lane: [all]
+    severity: block
+    statement: "Content is ineligible for the For You feed if it includes unoriginal or reused material without anything new."
+    check: originality.analysis_present
+    source: {url: "https://www.tiktok.com/community-guidelines/en/integrity-authenticity", snapshot: snapshots/tiktok_cg_integrity.txt, quote: "unoriginal or reused material without anything new"}
+    confidence: official
+    notes: "Community Guidelines version released Aug 25 2026, effective Sep 24 2026."
+  - id: tt.aigc.label
+    platform: [tiktok]
+    lane: [all]
+    severity: block
+    statement: "Label AI-generated or significantly edited content that shows realistic-looking scenes or people. Unlabeled content may be removed, restricted or labelled."
+    check: disclosure.ai_realistic
+    source: {url: "https://www.tiktok.com/community-guidelines/en/integrity-authenticity", snapshot: snapshots/tiktok_cg_integrity.txt}
+    confidence: official
+  - id: tt.engagement_manipulation
+    platform: [tiktok]
+    lane: [all]
+    severity: block
+    statement: "Content that tries to manipulate people into giving gifts or inflating likes or follows is not eligible for the For You feed. CTAs must give a reason (value), not beg or coerce."
+    check: cta.value_based
+    source: {url: "https://www.tiktok.com/community-guidelines/en/integrity-authenticity", snapshot: snapshots/tiktok_cg_integrity.txt, quote: "manipulate people into giving gifts or inflating likes or follows"}
+    confidence: official
+  - id: tt.automation
+    platform: [tiktok]
+    lane: [all]
+    severity: block
+    statement: "Automation tools, scripts or tricks designed to bypass TikTok's systems are strictly prohibited. We publish only through official APIs / partner schedulers / in-app drafts, and never automate engagement."
+    check: publisher.official_only
+    source: {url: "https://www.tiktok.com/community-guidelines/en/integrity-authenticity", snapshot: snapshots/tiktok_cg_integrity.txt, quote: "strictly prohibit automation tools, scripts"}
+    confidence: official
+  - id: tt.multi_account
+    platform: [tiktok]
+    lane: [all]
+    severity: info
+    statement: "Multiple accounts are allowed (e.g. fan content, creative expression) but not to deceive others or break rules; ban evasion with new accounts is prohibited."
+    check: manual
+    source: {url: "https://www.tiktok.com/community-guidelines/en/integrity-authenticity", snapshot: snapshots/tiktok_cg_integrity.txt}
+    confidence: official
+    notes: "Basis for the 2-accounts-per-platform plan (brand + clipping), each clearly purposed."
+  - id: tt.api.unaudited_private
+    platform: [tiktok]
+    lane: [all]
+    severity: info
+    statement: "Unaudited API clients can only post privately (SELF_ONLY); public posting needs an audited client. Use Postiz Cloud / partner app or in-app drafts."
+    check: manual
+    source: {url: "https://developers.tiktok.com/docs/en/content-sharing-guidelines", quote: "restricted to private viewing mode"}
+    confidence: official
+  - id: tt.meta
+    platform: [tiktok]
+    lane: [all]
+    severity: warn
+    statement: "Caption limit: sources disagree (2,200 vs 4,000). We enforce 2,200 as the safe limit; 3-5 hashtags recommended."
+    check: metadata.limits
+    source: {url: "https://recurpost.com/tiktok-scheduler/tiktok-character-limits-and-hashtags/"}
+    confidence: secondary
+
+  # ------------------------------------------------------------------ Instagram
+  - id: ig.reco.unoriginal
+    platform: [instagram]
+    lane: [all]
+    severity: block
+    statement: "Not recommended: unoriginal content largely repurposed from another source with only minor, immaterial edits, without adding material value."
+    check: originality.analysis_present
+    source: {url: "https://help.instagram.com/313829416281232", snapshot: snapshots/instagram_recommendations.txt, quote: "without adding material value"}
+    confidence: official
+    notes: "Third-party reports (Apr 30 2026) say watermarks, speed changes and credit tags do not make a repost original. Not on the official page; treated as secondary."
+  - id: ig.reco.long_caption
+    platform: [instagram]
+    lane: [all]
+    severity: warn
+    statement: "Not recommended: long captions unrelated to the content, and coordinated comment networks that artificially drive engagement."
+    check: caption.relevance_and_length
+    source: {url: "https://help.instagram.com/313829416281232", snapshot: snapshots/instagram_recommendations.txt}
+    confidence: official
+  - id: ig.reco.ai_person
+    platform: [instagram]
+    lane: [all]
+    severity: warn
+    statement: "Accounts that repeatedly share photorealistic AI-generated people are less recommended unless they use the AI-generated profile label."
+    check: disclosure.ai_realistic
+    source: {url: "https://help.instagram.com/313829416281232", snapshot: snapshots/instagram_recommendations.txt}
+    confidence: official
+  - id: ig.meta
+    platform: [instagram]
+    lane: [all]
+    severity: warn
+    statement: "Caption <= 2,200 chars (first ~125 visible); keep hashtags to a handful."
+    check: metadata.limits
+    source: {url: "https://boomp.net/blog/social-media-caption-length"}
+    confidence: secondary
+
+  # ------------------------------------------------------------------ Clipping campaigns (Whop et al.)
+  - id: clip.whop.approval_before_pay
+    platform: [tiktok, youtube, instagram, x]
+    lane: [clipping]
+    severity: info
+    statement: "Brands pay per 1,000 views only after they approve the submission; they set requirements (quality, brand mention, prohibited content, length/format, required messaging), min/max payout, optional flat bonus, accepted platforms."
+    check: campaign.requirements
+    source: {url: "https://docs.whop.com/memberships-and-access/third-party-apps/content-rewards", snapshot: snapshots/whop_content_rewards_apps.txt}
+    confidence: official
+    notes: "Each campaign brief is the authority. The Scout parses it into a Campaign object and the reviewer checks every clip against it."
+  - id: clip.min_payout
+    platform: [all]
+    lane: [clipping]
+    severity: info
+    statement: "Min-payout / min-views thresholds mean low-view clips earn nothing; one source reports payouts return to the budget if a clip misses the brand's minimum within its monitoring window."
+    check: manual
+    source: {url: "https://docs.whop.com/memberships-and-access/third-party-apps/content-rewards", snapshot: snapshots/whop_content_rewards_apps.txt}
+    confidence: official
+  - id: clip.fake_views
+    platform: [all]
+    lane: [clipping]
+    severity: block
+    statement: "Botted or fake engagement leads to bans (platform rules and campaign terms). The system never buys or automates views/engagement."
+    check: publisher.official_only
+    source: {url: "https://www.tiktok.com/support/faq_detail?id=7581821550694013452", snapshot: snapshots/tiktok_creator_rewards.txt}
+    confidence: official
+
+  # ------------------------------------------------------------------ Internal design / strategy rules
+  - id: int.safe_zone
+    platform: [tiktok, instagram, youtube]
+    lane: [brand, affiliate]
+    severity: block
+    statement: "All critical text/graphics must sit inside the safe box (see safe_zones.yaml): bottom ~1/3 empty, right rail clear, top clear."
+    check: safezone.lint
+    source: {url: "rules/safe_zones.yaml"}
+    confidence: internal
+  - id: int.cta.required
+    platform: [all]
+    lane: [brand, affiliate]
+    severity: block
+    statement: "Every video ends with exactly one value-based CTA (follow / link in bio / comment prompt) and the post caption repeats it."
+    check: cta.present
+    source: {url: "owner requirement 2026-10-10"}
+    confidence: internal
+  - id: int.hook.first_second
+    platform: [all]
+    lane: [brand, affiliate]
+    severity: warn
+    statement: "Visual + on-screen text + audio inside the first second; no greeting opener."
+    check: hook.first_second
+    source: {url: "https://easyviral.ai/api/blog-md/we-analyzed-500-viral-faceless-shorts"}
+    confidence: secondary
+  - id: int.lane.separation
+    platform: [all]
+    lane: [all]
+    severity: block
+    statement: "Brand account = original content only (aims at YPP/CRP). Clipping account = campaign clips only (paid per view by the brand). Never post campaign/third-party footage on the brand account."
+    check: lane.separation
+    source: {url: "https://www.tiktok.com/support/faq_detail?id=7581821550694013452", snapshot: snapshots/tiktok_creator_rewards.txt}
+    confidence: internal
+    notes: "Derived from TikTok CRP originality rules and YouTube's channel-wide reused-content demonetisation."
+  - id: int.claims.sourced
+    platform: [all]
+    lane: [brand]
+    severity: block
+    statement: "Every number/factual claim shown on screen has a primary source in the spec (and on-screen source tag)."
+    check: claims.sourced
+    source: {url: "https://www.tiktok.com/community-guidelines/en/integrity-authenticity", snapshot: snapshots/tiktok_cg_integrity.txt}
+    confidence: internal
+  - id: int.captions.burned_in
+    platform: [all]
+    lane: [brand, affiliate]
+    severity: warn
+    statement: "Burned-in captions always on (most short video is watched without sound)."
+    check: captions.on
+    source: {url: "https://easyviral.ai/api/blog-md/we-analyzed-500-viral-faceless-shorts"}
+    confidence: secondary
+  - id: int.audio.mix
+    platform: [all]
+    lane: [brand, affiliate]
+    severity: warn
+    statement: "Voice stays intelligible: integrated loudness near -14 LUFS, music at least 12 dB under voice, true peak <= -1 dBTP."
+    check: audio.mix
+    source: {url: "internal"}
+    confidence: internal

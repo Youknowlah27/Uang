@@ -1,0 +1,411 @@
+{
+  "id": "2026-10-10-nvidia-moat",
+  "title": "Why Nvidia's real moat isn't the chip",
+  "account": "brand",
+  "lane": "brand",
+  "goal": "reach",
+  "platforms": [
+    "tiktok",
+    "instagram",
+    "youtube"
+  ],
+  "style": "mix",
+  "mood": "tech_pulse",
+  "voice": {
+    "name": "en-US-AndrewNeural",
+    "rate": "+5%"
+  },
+  "beats": [
+    {
+      "id": "hook",
+      "gapAfter": 0.3,
+      "text": "Everyone thinks Nvidia wins on chips. That's wrong."
+    },
+    {
+      "id": "rivals",
+      "gapAfter": 0.3,
+      "text": "AMD, Google and Amazon all build fast AI chips."
+    },
+    {
+      "id": "money",
+      "gapAfter": 0.35,
+      "text": "Yet Nvidia still earns roughly 90% of its fiscal 2026 revenue from data centers."
+    },
+    {
+      "id": "cuda",
+      "gapAfter": 0.3,
+      "text": "The reason is software. In 2006, Nvidia announced CUDA, its toolkit for programming GPUs."
+    },
+    {
+      "id": "devs",
+      "gapAfter": 0.3,
+      "text": "Nvidia says 6 million developers build on it."
+    },
+    {
+      "id": "switch",
+      "gapAfter": 0.35,
+      "text": "Switching chips often means rewriting years of code."
+    },
+    {
+      "id": "payoff",
+      "gapAfter": 0.45,
+      "text": "For many teams, the moat isn't just the chip. It's the code."
+    },
+    {
+      "id": "cta",
+      "gapAfter": 0.5,
+      "text": "Follow for part two: can anyone break CUDA's grip?"
+    }
+  ],
+  "scenes": [
+    {
+      "beat": "hook",
+      "template": "hook_stamp",
+      "style": "paper",
+      "props": {
+        "icon": "chip",
+        "kicker": {
+          "text": "Everyone thinks",
+          "at": 0
+        },
+        "lines": [
+          {
+            "text": "Nvidia wins",
+            "at": 2
+          },
+          {
+            "text": "on chips.",
+            "at": 4
+          }
+        ],
+        "strike": {
+          "line": 1,
+          "at": "that's"
+        },
+        "stamp": {
+          "text": "Wrong.",
+          "at": "wrong"
+        }
+      }
+    },
+    {
+      "beat": "rivals",
+      "template": "cards",
+      "style": "apple",
+      "props": {
+        "kicker": "AI accelerators",
+        "check_at": "fast",
+        "items": [
+          {
+            "name": "AMD",
+            "sub": "Instinct GPUs",
+            "at": "AMD"
+          },
+          {
+            "name": "Google",
+            "sub": "TPU",
+            "at": "Google"
+          },
+          {
+            "name": "Amazon",
+            "sub": "Trainium",
+            "at": "Amazon"
+          }
+        ],
+        "title": "Who builds AI accelerators?",
+        "subtitle": "Selected competing silicon",
+        "note": {
+          "text": "Fast AI chips, all of them.",
+          "at": "fast"
+        }
+      }
+    },
+    {
+      "beat": "money",
+      "template": "share",
+      "style": "data",
+      "props": {
+        "title": "Data Center share of revenue",
+        "subtitle": "% of Nvidia's total revenue",
+        "at": "90%",
+        "display_pct": 90,
+        "primary": {
+          "label": "Fiscal 2026",
+          "sub": "Year to Jan 25, 2026 · total $215.9B",
+          "main": 193.7,
+          "rest": 22.2,
+          "main_label": "Data Center",
+          "at": "90%"
+        },
+        "secondary": {
+          "label": "Q2 fiscal 2027",
+          "sub": "Quarter to Jul 26, 2026 · total $96.2B",
+          "main": 89.023,
+          "rest": 7.198,
+          "main_label": "Data Center",
+          "at": "from"
+        },
+        "total_label": "$215.9B",
+        "kicker": "NVIDIA · fiscal 2026 revenue",
+        "legend": [
+          {
+            "label": "Data Center",
+            "value": "$193.7B",
+            "tone": "accent",
+            "at": "data"
+          },
+          {
+            "label": "Everything else",
+            "value": "$22.2B",
+            "tone": "muted",
+            "at": "centers"
+          }
+        ],
+        "source": "Source: NVIDIA FY2026 results; Q2 FY2027 8-K",
+        "source_short": "Source: NVIDIA FY2026 results"
+      }
+    },
+    {
+      "beat": "cuda",
+      "template": "milestone",
+      "style": "apple",
+      "props": {
+        "lead": {
+          "text": "Software.",
+          "at": "software"
+        },
+        "year": {
+          "text": "2006",
+          "at": "In 2006"
+        },
+        "label": {
+          "text": "Nvidia announces",
+          "at": "Nvidia"
+        },
+        "keyword": {
+          "text": "CUDA",
+          "at": "CUDA"
+        },
+        "span": {
+          "text": "20 YEARS",
+          "from": 2006,
+          "to": 2026,
+          "at": "announced"
+        },
+        "marker": {
+          "label": "CUDA announced",
+          "at": "In 2006"
+        },
+        "code_from": 2,
+        "code_to": "CUDA",
+        "source": "Source: NVIDIA GTC 2026",
+        "code": [
+          "__global__ void add(",
+          "    float* a, float* b, float* c) {",
+          "  int i = threadIdx.x;",
+          "  c[i] = a[i] + b[i];",
+          "}"
+        ],
+        "title": "The reason: software",
+        "subtitle": "CUDA — Nvidia's platform for programming its GPUs"
+      }
+    },
+    {
+      "beat": "devs",
+      "template": "count_grid",
+      "style": "paper",
+      "props": {
+        "kicker": "CUDA developers",
+        "value": 6,
+        "decimals": 1,
+        "suffix": "M",
+        "label": "developers",
+        "label_at": "developers",
+        "at": "6",
+        "dots": 60,
+        "cols": 10,
+        "per_dot": "1 figure = 100k developers",
+        "source": "Source: NVIDIA GTC 2026"
+      }
+    },
+    {
+      "beat": "switch",
+      "template": "switch_cost",
+      "style": "data",
+      "props": {
+        "title": "Leaving CUDA means redoing…",
+        "arrow": "chips",
+        "fill": "rewriting",
+        "from": {
+          "label": "Your CUDA code"
+        },
+        "to": {
+          "label": "New chip"
+        },
+        "stamp": {
+          "text": "Rewrite it all.",
+          "at": "years"
+        },
+        "rows": [
+          {
+            "k": "Libraries",
+            "v": "cuDNN, cuBLAS and friends",
+            "tag": "RE-PORT",
+            "at": 0
+          },
+          {
+            "k": "Custom kernels",
+            "v": "CUDA C++ you wrote",
+            "tag": "REWRITE",
+            "at": "rewriting"
+          },
+          {
+            "k": "Tooling",
+            "v": "Profilers, debuggers",
+            "tag": "RELEARN",
+            "at": "years"
+          },
+          {
+            "k": "Team skills",
+            "v": "Engineers fluent in CUDA",
+            "tag": "RETRAIN",
+            "at": "code"
+          }
+        ],
+        "note": {
+          "text": "years of code…",
+          "at": "years"
+        }
+      }
+    },
+    {
+      "beat": "payoff",
+      "template": "statement",
+      "style": "paper",
+      "props": {
+        "kicker": "The takeaway",
+        "lines": [
+          {
+            "text": "The moat",
+            "at": "moat"
+          },
+          {
+            "text": "isn't the chip.",
+            "at": "isn't"
+          }
+        ],
+        "strike": {
+          "line": 1,
+          "at": "chip"
+        },
+        "highlight": {
+          "text": "It's the code.",
+          "at": "It's"
+        },
+        "icon": "code"
+      }
+    },
+    {
+      "beat": "cta",
+      "template": "cta_end",
+      "style": "apple",
+      "props": {}
+    }
+  ],
+  "cta": {
+    "type": "follow",
+    "headline": "Follow for part two",
+    "sub": "Can anyone break CUDA's grip?",
+    "promise": "Part 2: can anyone break CUDA's grip?"
+  },
+  "mascot": {
+    "host": true,
+    "reactions": [
+      {
+        "beat": "hook",
+        "word": "wrong",
+        "pose": "shock",
+        "dur": 1.1
+      },
+      {
+        "beat": "money",
+        "word": "centers",
+        "pose": "cheer",
+        "dur": 1.0
+      },
+      {
+        "beat": "switch",
+        "word": "rewriting",
+        "pose": "sad",
+        "dur": 1.2
+      },
+      {
+        "beat": "payoff",
+        "word": "code",
+        "pose": "smug",
+        "dur": 1.2
+      },
+      {
+        "beat": "cta",
+        "word": 0,
+        "pose": "wave",
+        "dur": 3.3
+      }
+    ]
+  },
+  "claims": [
+    {
+      "text": "Data Center was $193.7B of $215.9B revenue in fiscal 2026 (~90%)",
+      "source": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026",
+      "scene": "money"
+    },
+    {
+      "text": "Data Center $89.0B of $96.2B in Q2 fiscal 2027 (92.5%)",
+      "source": "https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000073/q2fy27pr.htm",
+      "scene": "money"
+    },
+    {
+      "text": "AMD Instinct, Google TPU and Amazon Trainium are AI accelerators",
+      "source": "https://cloud.google.com/tpu",
+      "scene": "rivals"
+    },
+    {
+      "text": "CUDA was announced in 2006 (NVIDIA marks 20 years of CUDA at GTC 2026)",
+      "source": "https://forums.developer.nvidia.com/t/20-years-of-cuda-honoring-the-architects-of-the-accelerated-age/364654",
+      "scene": "cuda"
+    },
+    {
+      "text": "6 million developers build on CUDA (NVIDIA GTC 2026)",
+      "source": "https://forums.developer.nvidia.com/t/20-years-of-cuda-honoring-the-architects-of-the-accelerated-age/364654",
+      "scene": "devs"
+    }
+  ],
+  "analysis_points": [
+    "The revenue mix shows demand is concentrated in data centers, not gaming or PCs.",
+    "Switching cost is a large part of the moat: libraries (cuDNN, cuBLAS), custom kernels, tooling and team skills are CUDA-specific, so moving means porting work.",
+    "Rivals can match chip speed; matching a 20-year software ecosystem is harder. Software is not the only advantage (networking, memory and supply also matter), but it is the hardest to copy."
+  ],
+  "post": {
+    "caption": "Everyone says Nvidia's moat is its chips. The numbers point elsewhere: ~90% of FY2026 revenue is Data Center, and Nvidia says 6M developers build on CUDA. Switching chips often means rewriting years of code. Follow for part 2: can anyone break CUDA's grip?",
+    "hashtags": [
+      "#Nvidia",
+      "#CUDA",
+      "#AI",
+      "#TechBusiness",
+      "#Strategy"
+    ],
+    "mentions": [],
+    "tag_suggestions": [
+      {
+        "handle": "@nvidia",
+        "platform": "instagram",
+        "why": "Subject of the video. Optional: tagging rarely earns a re-share; use only for reaction-style videos."
+      }
+    ],
+    "first_comment": "Which part of CUDA can rivals copy the slowest: libraries, tooling or developer habits?",
+    "youtube": {
+      "title": "Nvidia's real moat isn't the chip (it's CUDA)",
+      "description": "Why ~90% of Nvidia's revenue comes from data centers and why CUDA's 6M developers make switching so hard.\n\nSources:\n- NVIDIA FY2026 results\n- NVIDIA GTC 2026\n\n#Nvidia #CUDA #AI #Shorts"
+    }
+  }
+}

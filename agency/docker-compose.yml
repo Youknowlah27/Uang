@@ -1,0 +1,12 @@
+services:
+  agency:
+    build: .
+    restart: unless-stopped
+    env_file: .env            # NOTION_TOKEN=..., (optional) POSTIZ_API_KEY=..., GEMINI_API_KEY=...
+    volumes:
+      - ./build:/app/build    # videos, db, audio
+      - ./inbox:/app/inbox    # drop campaign briefs here
+      - ./knowledge:/app/knowledge
+      - ./rules:/app/rules
+      - ./config:/app/config
+      - ~/.claude:/root/.claude:ro   # reuse your host `claude login` (subscription) — only for llm.provider=claude_cli

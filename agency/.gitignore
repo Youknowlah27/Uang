@@ -1,0 +1,12 @@
+build/
+queue/
+inbox/campaigns/processed/
+config/agency.yaml
+config/accounts.yaml
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+studio/node_modules/
+studio/out/frames/
+studio/.remotion/

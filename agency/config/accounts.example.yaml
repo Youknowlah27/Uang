@@ -1,0 +1,17 @@
+# Copy to config/accounts.yaml and fill in. Two accounts per platform (plan agreed 2026-10-10):
+#   brand    = original content only  -> aims at YouTube Partner Program / TikTok Creator Rewards / affiliate
+#   clipping = campaign clips only     -> paid per view by the brand (Whop Content Rewards, Vyro, ...)
+# Never post campaign/third-party footage on the brand account (rule int.lane.separation).
+accounts:
+  brand:
+    lane: brand
+    handles: {tiktok: "@your_brand_handle", instagram: "@your_brand_handle", youtube: "@your_brand_handle"}
+    account_type: personal        # TikTok Creator Rewards needs a Personal account (not Business)
+    goal_default: reach           # reach | creator_rewards | affiliate
+  clipping:
+    lane: clipping
+    handles: {tiktok: "@your_clips_handle", instagram: "@your_clips_handle", youtube: "@your_clips_handle"}
+    account_type: personal
+    goal_default: campaign
+publisher:
+  method: manual_draft            # manual_draft | postiz_cloud | postiz_selfhost | openshorts | tiktok_api | youtube_api | instagram_graph

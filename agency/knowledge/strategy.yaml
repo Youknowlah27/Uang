@@ -1,0 +1,26 @@
+# Living copy-strategy. The Analyst edits this file from measured results; the Strategist/Writer read it.
+# Everything below is a STARTING HYPOTHESIS (source: owner brief + third-party study), not a measured fact, until `evidence` says so.
+version: 1
+updated: 2026-10-10
+confidence: low
+formats:
+  reach: {seconds: [20, 45], words: [60, 140], note: "sweet spot per 500-short study (vendor source, unverified)"}
+  creator_rewards: {seconds: [61, 90], words: [150, 230], note: "TikTok CRP needs >= 60s (official)"}
+  campaign: {seconds: [20, 60], note: "follow the campaign brief"}
+hooks:
+  preferred: [curiosity_gap, numbered, contrarian]
+  avoid: [greeting, "hey guys", "in this video"]
+  ab_test_next: "contrarian vs numbered on the same topic"
+cta:
+  mix: {follow: 0.6, comment: 0.25, link: 0.15}
+  rules: ["state the value ('Follow for part 2: ...'), never beg", "one CTA per video", "repeat it in the caption"]
+copy:
+  caption_max_chars: 450
+  hashtags: {count: [3, 5], avoid_generic: ["#fyp", "#viral", "#foryou"]}
+  tone: "skeptical, evidence-based, plain English; no hype words"
+topics:
+  pillars: ["why a company wins/loses (moats, switching costs)", "numbers that explain a market", "how a technology actually works", "what a headline really means"]
+  banned: ["unverified rumours", "price predictions", "medical/legal advice"]
+posting:
+  best_hours_local: []        # filled by the Analyst once >= 30 posts exist
+evidence: []

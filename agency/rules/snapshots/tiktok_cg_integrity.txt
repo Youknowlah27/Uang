@@ -1,0 +1,70 @@
+SOURCE: https://www.tiktok.com/community-guidelines/en/integrity-authenticity
+FETCHED: 2026-10-10
+CHARS: 6693
+
+Integrity and Authenticity | Community Guidelines 
+ Community Guidelines 
+ Integrity and Authenticity
+ Table of Contents Misinformation 
+ Civic and Election Integrity 
+ Edited Media and AI-Generated Content (AIGC) 
+ Unoriginal Content and Intellectual Property Rights 
+ Deceptive Behaviors and Fake Engagement 
+ Released August 25, 2026
+ Effective September 24, 2026
+ Previous Versions: Here 
+ TikTok is all about having authentic experiences—from the accounts you follow, to the content you see. We want you to feel confident that what you’re watching is reliable, original, and shared by real people. This trust is what helps build strong communities both on and off-platform.
+ Misinformation
+ In a global community, people will have different opinions—but we aim to ground those conversations in facts. That's why we don't allow misinformation that could cause significant harm to individuals or society, no matter the intent of the person posting it. This includes hoaxes, misleading AIGC, harmful conspiracy theories, and other false information related to public safety, crises, or major civic events—when such content may lead to violence or cause public panic. We work with independent fact-checkers and experts to assess the accuracy of content, and we factor their assessments into our moderation decisions.
+ Content is ineligible for the FYF if it contains misinformation that may cause moderate harm to individuals or society. To be cautious, unverified information about crises, major civic events, or content temporarily under review by fact-checkers is also ineligible for the FYF. We may also apply warning labels or prompt users to pause before sharing unconfirmed content.
+ More information
+ Civic and Election Integrity
+ Elections are important events that often spark lively conversations and debate. We aim to respect these discussions while ensuring TikTok remains a space that brings people together. We welcome informed civic conversations, but draw the line at content that could mislead voters or cause real-world harm. That includes misinformation that could prevent people from voting, interfere with elections, or encourage the unlawful disruption of results.
+ We classify eligible political TikTok accounts as Government, Politician, and Political Party Accounts and apply a set of policies that prevent the use of certain features. These accounts aren't allowed to participate in incentive programs or creator monetization features.
+ We also don't allow paid political advertising . This includes creators being compensated for making branded political content , and the use of other promotional tools on the platform, such as Promote . We prohibit advertising of any kind by political figures and entities, and suspected paid political advertising is ineligible for the For You feed. However, eligible government entities may advertise in specific, approved categories—such as public health and safety information, tourism, and culture—after completing a certification process. Additionally, official electoral management bodies may run informational ads about election processes.
+ To help you manage your TikTok experience, we may add warning labels to content that our fact-checking partners cannot verify. Learn more about our election integrity work. 
+ More information
+ Edited Media and AI-Generated Content (AIGC)
+ We welcome creativity, including when it comes from new digital tools like generative artificial intelligence (AI). But generative AI and editing can blur the line between fact and fiction. To help keep content on TikTok trustworthy and provide people with important context about what they are viewing, we require creators to label AI-generated or significantly edited content that shows realistic-looking scenes or people . Unlabeled content may be removed, restricted, or labeled by our team, depending on the harm it could cause.
+ Even with labels, some edited or AI-generated content can still be harmful. We don’t allow content that’s misleading about matters of public importance or harmful to individuals .
+ More information
+ Unoriginal Content and Intellectual Property Rights
+ The creativity on TikTok is what makes our community special. We want to protect that. You should only post content you created or have the right to share. We don't allow content that violates someone else's intellectual property (IP) rights. If we become aware of content that breaks these rules, we will remove it. Learn more about our IP policies . 
+ Content is also ineligible for the FYF if it includes unoriginal or reused material without anything new.
+ If you think your copyright or trademark rights have been violated, you can submit a copyright or trademark report through our in-app tools.
+ More information
+ Deceptive Behaviors and Fake Engagement
+ We want TikTok to be a trustworthy space where people around the world can create, connect, and learn. Authentic engagement is core to that experience—it helps power the recommendations you see.
+ That’s why we don’t allow accounts that mislead or try to manipulate our platform , or the trade of services that artificially boost engagement or trick the recommendation system . This includes behaviors like covert influence operations, impersonation, spam, fake reviews, and sharing hacked materials in harmful ways. You can have multiple accounts—for example, for fan content or creative expression—but not to deceive others or break the rules. If we find deceptive account behavior, we may:
+ Ban your account 
+ Ban additional or new accounts you create
+ Restrict your account, which could include limiting your ability to post new content, appear in top search results, or in the FYF
+ We strictly prohibit automation tools, scripts, or other tricks designed to bypass our systems. These can result in content removal, account bans, or other enforcement. If your account is restricted or banned, you may not create or use another account to get around it.
+ If we detect accounts or content with inauthentic metrics, we’ll remove fake likes, followers, or other inflated signals. Content that tries to manipulate people into giving gifts or inflating likes or follows isn’t eligible for the FYF.
+ More information
+ Was it helpful?
+ Yes 
+ No 
+ Company About TikTok 
+ Newsroom 
+ Contact 
+ Careers 
+ ByteDance 
+ Programs TikTok for Good 
+ TikTok for Developers 
+ Effect House 
+ Advertise on TikTok 
+ TikTok Embeds 
+ Resources Help Center 
+ Safety Center 
+ Privacy Center 
+ Creator Academy 
+ Community Guidelines 
+ Transparency 
+ Accessibility 
+ Legal Terms of Service 
+ Privacy Policy 
+ Intellectual Property Policy 
+ TikTok Law Enforcement Guidelines 
+ Children's Privacy Policy 
+ © 2025 TikTok

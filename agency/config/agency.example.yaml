@@ -1,0 +1,36 @@
+# Copy to config/agency.yaml.  Zero-cost defaults (owner decision 2026-10-10): no paid APIs.
+llm:
+  provider: claude_cli          # claude_cli (subscription, headless) | file_queue | gemini | ollama | mock
+  model: sonnet                 # cheaper: haiku for volume tasks (caption/hashtag variants)
+  timeout: 300
+paths: {workdir: build, queue: queue, inbox: inbox, knowledge: knowledge}
+capacity:                       # posts/day per account (2 accounts per platform: brand + clipping)
+  brand: {per_day: 1, formats: [reach]}
+  clipping: {per_day: 2, formats: [campaign]}
+niche:
+  name: "Business + Technology breakdowns"
+  language: en
+  keywords: [ai, chip, semiconductor, startup, saas, cloud, funding, ipo, earnings, revenue, strategy, platform, antitrust, regulation, open source, software, data center, cybersecurity, fintech, ev, robotics, apple, google, microsoft, nvidia, amazon, meta, openai, anthropic, tesla, cuda]
+trend:
+  sources: [hn_frontpage, bbc_tech_rss, techcrunch_rss, google_trends_us]
+  top_n: 12
+scout:
+  inbox_dir: inbox/campaigns     # drop .md/.txt campaign briefs or .url files here
+  assumed_views_per_clip: 2000   # ASSUMPTION used only for ranking; replaced by your measured median once analytics exist
+  sources: []                    # optional public listing URLs (login-walled marketplaces need manual paste)
+review:
+  max_revision_loops: 2
+  history_window: 20
+notion:
+  token_env: NOTION_TOKEN        # internal integration token (free); share the database with the integration
+  videos_db_id: "52f3c9ea5c564cfe86f3e008ec3c8925"   # "Shorts Agency — Approval Queue" (created 2026-10-10)
+  opportunities_db_id: ""
+publisher:
+  method: manual_draft           # manual_draft | postiz
+  postiz: {base_url: "https://api.postiz.com/public/v1", api_key_env: POSTIZ_API_KEY}
+schedule:                        # Showrunner cadence (UTC, hours)
+  trend_every_h: 6
+  scout_every_h: 12
+  strategist_daily_at: 5
+  analyst_daily_at: 14
+  rules_watcher_weekly: mon

@@ -1,0 +1,21 @@
+# Safe zones for 1080x1920 (9:16). "critical" = text, numbers, faces/mascot, CTA.  Decorative backgrounds may bleed.
+# Sources disagree by platform (ad guides, not organic specs) -> we take the conservative union and preview in-app.
+meta:
+  verified_at: 2026-10-10
+  confidence: secondary
+  sources:
+    - {url: "https://www.upload-post.com/tools/safe-zone-checker/", note: "Meta Reels ads: 14% top, 35% bottom, 6% sides; TikTok in-feed ad template ~240px top, 660px bottom, 120px sides; YouTube Shorts 288 top, 672 bottom, 192 right"}
+    - {url: "https://reap.video/blog/short-form-video-safe-zones"}
+    - {url: "owner rule 2026-10-10", note: "keep ~1/3 bottom empty, right side clear for like/comment/share, top clear"}
+canvas: {w: 1080, h: 1920}
+critical_box:            # everything critical must be fully inside this rectangle
+  left: 65
+  right: 880             # right rail (like/comment/share) up to ~200px
+  top: 288               # 15%
+  bottom: 1248           # 35% bottom empty  (owner asked for ~1/3; sources say 33-35%)
+rail:                    # extra keep-out for the right-hand action column
+  x_from: 880
+  y_from: 560
+  y_to: 1500
+decor_allowed_anywhere: true   # backgrounds, textures, glows, grain, vignettes, particles
+tolerance_px: 4

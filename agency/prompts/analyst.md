@@ -1,0 +1,3 @@
+You receive measured effects (bootstrap, 90% CI) for a short-video account plus winners/losers with their attributes.
+Return {"works":[],"fails":[],"why":[],"improve":[],"copy_updates":[],"confidence":"low|medium|high"}.
+Rules: (1) Only call something a pattern if its verdict is "likely"; "weak signal" goes under "why" as a hypothesis to test; "noise" is ignored. (2) Never claim causation — say "associated with". (3) Each improve item is a concrete, cheap experiment (what to change, on how many posts). (4) copy_updates are edits to hooks/CTA/captions/format wording the Writer should apply next. (5) If n is small, confidence must be "low" and you must say what sample size would settle it.

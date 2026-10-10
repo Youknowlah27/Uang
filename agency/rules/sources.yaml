@@ -1,0 +1,10 @@
+# Pages the RulesWatcher re-snapshots (rendered with headless Chromium) and diffs. Update the KB when something changes.
+sources:
+  - {slug: youtube_inauthentic, url: "https://support.google.com/youtube/answer/1311392", platform: youtube, rules: [yt.inauthentic.template, yt.inauthentic.text_slideshow, yt.reused.permission_irrelevant]}
+  - {slug: youtube_altered_content, url: "https://support.google.com/youtube/answer/14328491", platform: youtube, rules: [yt.ai.disclosure]}
+  - {slug: youtube_ypp_overview, url: "https://support.google.com/youtube/answer/72851", platform: youtube, rules: [yt.ypp.thresholds]}
+  - {slug: tiktok_creator_rewards, url: "https://www.tiktok.com/support/faq_detail?id=7581821550694013452", platform: tiktok, rules: [tt.crp.eligibility, tt.crp.min_duration, tt.crp.original_only, tt.crp.no_sponsored]}
+  - {slug: tiktok_cg_integrity, url: "https://www.tiktok.com/community-guidelines/en/integrity-authenticity", platform: tiktok, rules: [tt.fyf.unoriginal, tt.aigc.label, tt.engagement_manipulation, tt.automation, tt.multi_account]}
+  - {slug: instagram_recommendations, url: "https://help.instagram.com/313829416281232", platform: instagram, rules: [ig.reco.unoriginal, ig.reco.long_caption, ig.reco.ai_person]}
+  - {slug: whop_content_rewards_apps, url: "https://docs.whop.com/memberships-and-access/third-party-apps/content-rewards", platform: clipping, rules: [clip.whop.approval_before_pay, clip.min_payout]}
+  - {slug: postiz_tiktok, url: "https://docs.postiz.com/providers/tiktok", platform: tiktok, rules: [tt.api.unaudited_private]}
