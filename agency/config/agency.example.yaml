@@ -1,8 +1,16 @@
 # Copy to config/agency.yaml.  Zero-cost defaults (owner decision 2026-10-10): no paid APIs.
 llm:
-  provider: claude_cli          # claude_cli (subscription, headless) | file_queue | gemini | ollama | mock
-  model: sonnet                 # cheaper: haiku for volume tasks (caption/hashtag variants)
+  provider: router              # router (recommended) | claude_cli | file_queue | gemini | ollama | mock
+  default: claude_cli           # critical tasks: writer, director, editorial, strategist  (your Claude subscription)
+  model: sonnet
   timeout: 300
+  routes:                       # volume tasks → Gemini free API key (GEMINI_API_KEY from aistudio.google.com); falls back to Claude on any error
+    trend_angles: gemini
+    scout_parse: gemini
+    analyst: gemini
+    caption_variants: gemini
+  fallback: claude_cli
+  gemini: {model: gemini-flash-latest}   # alias; verify the current free-tier model on Google's pricing page
 paths: {workdir: build, queue: queue, inbox: inbox, knowledge: knowledge}
 capacity:                       # posts/day per account (2 accounts per platform: brand + clipping)
   brand: {per_day: 1, formats: [reach]}

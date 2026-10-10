@@ -54,8 +54,28 @@ class JSONMixin:
         raise LLMError(f"{task}: still invalid after {retries + 1} attempts: {last}")
 
 
+def _build(kind: str, cfg: dict):
+    if kind == "claude_cli":
+        from .claude_cli import ClaudeCLI
+        return ClaudeCLI(model=cfg.get("model"), timeout=cfg.get("timeout", 300))
+    if kind == "gemini":
+        from .http_llms import GeminiLLM
+        return GeminiLLM(cfg.get("gemini", {}).get("model", cfg.get("model", "gemini-flash-latest")))
+    return get_llm({**cfg, "provider": kind})
+
+
 def get_llm(cfg: dict) -> "LLM":
     kind = (cfg or {}).get("provider", "claude_cli")
+    if kind == "router":
+        from .router import RoutingLLM
+        default = _build(cfg.get("default", "claude_cli"), cfg)
+        routes = {}
+        for task, prov in (cfg.get("routes") or {}).items():
+            try:
+                routes[task] = _build(prov, cfg)
+            except Exception:  # noqa: BLE001  e.g. GEMINI_API_KEY not set → that task simply stays on the default provider
+                continue
+        return RoutingLLM(default, routes, fallback=_build(cfg.get("fallback", cfg.get("default", "claude_cli")), cfg))
     if kind == "claude_cli":
         from .claude_cli import ClaudeCLI
         return ClaudeCLI(model=cfg.get("model"), timeout=cfg.get("timeout", 300))

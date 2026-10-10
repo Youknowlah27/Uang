@@ -63,6 +63,8 @@ class WriterAgent(Agent):
         ctx_block = (f"PLAN: {json.dumps({k: v for k, v in plan.items() if not k.startswith('_')})}\nPLATFORMS: {platforms}\nCAPTION_MAX: {strategy['copy']['caption_max_chars']}\nTARGET_SECONDS: {plan['target_seconds']}\n"
                      f"TOPIC: {idea['title'] if idea else ''}\nANGLE: {json.dumps((idea or {}).get('angle', {}))}\nEVIDENCE (the only allowed claim sources):\n" + "\n".join(f"- {e['title']} | {e['url']}" for e in evidence)
                      + f"\nTONE/COPY RULES: {strategy['copy']['tone']}; avoid hooks: {strategy['hooks']['avoid']}")
+        if idea and idea.get("research_notes"):
+            ctx_block += "\n\nRESEARCH NOTES (from Gemini Deep Research; URLs in them are allowed claim sources):\n" + idea["research_notes"][:4500]
         if previous:
             ctx_block += "\n\nPREVIOUS DRAFT (revise it, keep what works):\n" + json.dumps(previous)[:5000]
         if feedback:

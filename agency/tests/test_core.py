@@ -235,3 +235,33 @@ def test_rules_watcher_diff():
     old, new = normalise("A\nFETCHED: 1\nB\nC"), normalise("A\nFETCHED: 2\nB\nD")
     d = diff_summary(old, new)
     assert "-C" in d and "+D" in d and not any("FETCHED" in x for x in d)
+
+
+# ---------------------------------------------------------------- gemini routing + hand-off
+def test_router_routes_cheap_tasks_and_falls_back_to_claude_on_error():
+    from shorts_agency.llm.router import RoutingLLM
+    claude, gemini = MockLLM(), MockLLM()
+    claude.name, gemini.name = "claude", "gemini"
+    claude.register("writer", lambda s, p: "claude-writer").register("trend_angles", lambda s, p: "claude-angles")
+    gemini.register("trend_angles", lambda s, p: "gemini-angles")
+    r = RoutingLLM(claude, {"trend_angles": gemini, "scout_parse": gemini}, fallback=claude)
+    assert r.complete("s", "p", task="trend_angles") == "gemini-angles"      # cheap task → Gemini
+    assert r.complete("s", "p", task="writer") == "claude-writer"            # critical task → Claude
+    claude.register("scout_parse", lambda s, p: "claude-parse")              # Gemini has no handler → raises → falls back
+    assert r.complete("s", "p", task="scout_parse") == "claude-parse" and r.fallbacks == 1
+    assert r.stats["gemini"] == 2 and r.stats["claude"] >= 2
+
+
+def test_handoff_pack_and_ingest(tmp_path):
+    from shorts_agency.handoff import make_pack, ingest_research
+    from shorts_agency.state import Store
+    p = make_pack("research", "Nvidia moat", "software lock-in", tmp_path, "t1")
+    assert "Deep Research" in p.read_text() and "primary-source URL" in p.read_text()
+    assert "Nano Banana" in make_pack("image", "x", out_dir=tmp_path, slug="t2").read_text()
+    rep = tmp_path / "r.md"
+    rep.write_text("| claim | url |\n| 90% | https://nvidianews.nvidia.com/news/x. |\nsee (https://www.sec.gov/Archives/a.htm)")
+    st = Store(tmp_path / "s.db")
+    st.put("idea", "i1", {"id": "i1", "title": "T", "score": 1, "evidence": [{"title": "a", "url": "https://nvidianews.nvidia.com/news/x", "source": "x"}]}, "new")
+    out = ingest_research(rep, st, "i1")
+    d = st.get("idea", "i1")
+    assert out["urls"] == 2 and d["_status"] == "researched" and len(d["evidence"]) == 2 and "90%" in d["research_notes"]   # dedup + new source added

@@ -47,3 +47,12 @@ real TTS, 4 rendered videos, loudness −14 LUFS / −1 dBTP, safe-zone lint on 
 **Not** verified: Docker image build, Notion REST sync (DB created via Notion MCP; REST needs your token), Postiz calls, Gemini/Ollama providers, marketplace scraping
 (login-walled → paste briefs into `inbox/campaigns/`), the clipping lane's actual clip-making (semi-manual: campaign card + reviewer; OpenShorts/other clipper creates the clip),
 real analytics (needs ≥20 posts; effects are only "likely" at n≥5 per group). Music/SFX are synthesised and checked by metrics/spectrogram, **not by ear** — judge them yourself.
+
+## Splitting work with Gemini (Google AI Plus) — what is possible, what is not (verified 2026-10-10)
+| Route | Works? | Use it for |
+|---|---|---|
+| Gemini **API key (free, aistudio.google.com)** | Yes, programmatic. NOT part of the Plus subscription; free-tier limits/models differ per source → verify | `llm.routes`: trend angles, campaign parsing, analyst draft, caption variants (auto-fallback to Claude on any error) |
+| Gemini **app / Plus quotas** | Manual hand-off only (no official API; UI automation is against platform rules we encoded) | `python -m shorts_agency handoff research --plan <id>` → paste into Deep Research → save result → `ingest <file> <idea_id>`; Nano Banana (mascot/thumbnails), Flow/Veo (rare stylised B-roll) |
+| Gemini **CLI with Google login** | Reportedly ended for individuals on 2026-06-18 → do not rely on it | — |
+| Google Drive | Connector available in Claude Code sessions | Save Gemini outputs to a Drive folder; Claude reads them there |
+Claude keeps: script, direction, editorial review, strategy, orchestration, code.
